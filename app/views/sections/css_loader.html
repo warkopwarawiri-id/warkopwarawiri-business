@@ -1,0 +1,5 @@
+    {% for item in cdn_css %}
+    <link href="{{ item.url }}" rel="{{ item.type }}"/>
+    {% endfor %}
+
+    <link href="{{ css }}" rel="stylesheet"/>

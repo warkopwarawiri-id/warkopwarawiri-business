@@ -1,0 +1,5 @@
+{% for item in cdn_js %}
+    <script src="{{ item.url }}" type="{{ item.type }}"></script>
+{% endfor %}
+
+<script src="{{ js }}" defer type="module"></script>

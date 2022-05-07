@@ -1,0 +1,8 @@
+*.DS_Store
+/vendor/
+
+public/dist/*
+!public/dist/index.html
+
+app/views/.cache/*
+!app/views/.cache/.gitkeep

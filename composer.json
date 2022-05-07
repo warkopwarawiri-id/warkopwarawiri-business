@@ -1,0 +1,7 @@
+{
+    "require": {
+        "vlucas/phpdotenv": "^5.4",
+        "twig/twig": "^3.0",
+        "klein/klein": "^2.1"
+    }
+}

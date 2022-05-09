@@ -12,6 +12,13 @@ class BaseController {
 
     function __construct($request) {
         $this->request = $request;
+
+        $this->include_js([
+            main_dist('js/core/helpers.js'),
+            main_dist('js/core/app_db.js'),
+            main_dist('js/core/app_session.js'),
+            main_dist('js/core/application.js')
+        ]);
     }
 
     protected function render($view) : void {
@@ -27,7 +34,11 @@ class BaseController {
             ]);
         }
 
-        $this->include_js('https://code.jquery.com/jquery-3.6.0.min.js', true);
+        $this->include_js(base_url('static/libs/jquery-3.6.0/dist/jquery.min.js'), true);
+        $this->include_js(base_url('static/libs/axios-0.27.2/dist/axios.min.js'), true);
+        $this->include_js(base_url('static/libs/crypto-js-4.1.1/crypto-js.js'), true);
+        $this->include_js(base_url('static/libs/localForage-1.10.0/dist/localforage.min.js'), true);
+
         $data = array(
             'css' => base_url(AssetMinifier::create($this->included_css, 'css')),
             'js' => base_url(AssetMinifier::create($this->included_js, 'js')),
@@ -38,6 +49,14 @@ class BaseController {
             ]
         );
 
+        function sanitize_output(String $buffer) : String {
+            $search = array('/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/<!--(.|\s)*?-->/');
+            $replace = array('>', '<', '\\1', '');
+            $buffer = preg_replace($search, $replace, $buffer);
+        
+            return $buffer;
+        }
+
         exit($twig->render("$view.html", $data));
     }
 
@@ -45,7 +64,7 @@ class BaseController {
         if(is_string($files)) {
             if($is_cdn || filter_var($files, FILTER_VALIDATE_URL)) {
                 array_push($this->cdn_css, ["type" => "$type", "url" => $files]);
-                $this->cdn_css = array_unique($this->cdn_css);
+                $this->cdn_css = $this->cdn_css;
             } else {
                 self::include_css([$files]);
             }
@@ -59,7 +78,7 @@ class BaseController {
         if(is_string($files)) {
             if($is_cdn || filter_var($files, FILTER_VALIDATE_URL)) {
                 array_push($this->cdn_js, ["type" => "$type", "url" => "$files"]);
-                $this->cdn_js = array_unique($this->cdn_js);
+                $this->cdn_js = $this->cdn_js;
             } else {
                 self::include_js([$files]);
             }

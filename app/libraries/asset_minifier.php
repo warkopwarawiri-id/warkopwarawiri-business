@@ -21,23 +21,23 @@ class AssetMinifier {
             $combined .= ';';
         }
 
-        if($_ENV['ENVIRONMENT'] !== 'development') {
-            switch ($type) {
-                case 'css':
-                    $minified = self::_get_minified($_ENV['CSS_MINIFIER_API'], $combined);
-                    break;
+        // if($_ENV['ENVIRONMENT'] !== 'development') {
+        //     switch ($type) {
+        //         case 'css':
+        //             $minified = self::_get_minified($_ENV['CSS_MINIFIER_API'], $combined);
+        //             break;
 
-                case 'js':
-                    $minified = self::_get_minified($_ENV['JS_MINIFIER_API'], $combined);
-                    break;
+        //         case 'js':
+        //             $minified = self::_get_minified($_ENV['JS_MINIFIER_API'], $combined);
+        //             break;
                 
-                default:
-                    throw new Exception("AssetMinifier::create only css and js at type parameters.", 1);
-                    break;
-            }
+        //         default:
+        //             throw new Exception("AssetMinifier::create only css and js at type parameters.", 1);
+        //             break;
+        //     }
 
-            $combined = $minified;
-        }
+        //     $combined = $minified;
+        // }
 
         $filename = md5($combined) . ".min.$type";
         if(!file_exists(public_dist($filename))) {

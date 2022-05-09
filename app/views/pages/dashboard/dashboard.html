@@ -4,8 +4,10 @@
 {{ include('sections/document_head.html') }}
 
 <body>
-	<div class="page">
-		
+	{{ include('sections/page_loader.html') }}
+
+	<div class="page init">
+
 		{{ include('sections/header.html') }}
 
 		<div class="page-wrapper">
@@ -1984,14 +1986,11 @@
 				</div>
 			</div>
 		</div>
-	</div> 
-	
+	</div>
+
 	{{ include('sections/js_loader.html') }}
 
 	<script>
-		$(document).ready(() => {
-			console.log("haha okeee");
-		});
 		// @formatter:off
 		document.addEventListener("DOMContentLoaded", function () {
 			window.ApexCharts && (new ApexCharts(document.getElementById('chart-revenue-bg'), {

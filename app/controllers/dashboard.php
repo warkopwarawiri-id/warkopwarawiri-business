@@ -20,7 +20,9 @@ class Dashboard extends \BaseController {
             main_dist('libs/jsvectormap/dist/maps/world.js'),
             main_dist('libs/jsvectormap/dist/maps/world-merc.js'),
             main_dist('js/tabler.min.js'),
-            main_dist('js/demo.min.js')
+            main_dist('js/demo.min.js'),
+
+            main_dist('js/pages/dashboard.js'),
         ]);
 
         $this->render('pages/dashboard/dashboard');
